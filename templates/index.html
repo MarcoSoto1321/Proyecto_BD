@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!--Barra de navegacíon-->
+    <header>
+        <div class="back">
+            <div class="menu container">
+
+                <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
+                <input type="checkbox" id="menu">
+                <label for="menu">
+                    <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
+                </label>
+
+                <nav class="navbar">    
+                    <ul class="menu__horizontal">
+                        <li>
+                            <a href="{{url_for('inicio')}}">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="#">Agregar información</a>
+                            <ul class="menu__vertical">
+                                <li><a href="{{url_for('agregarEmpleado')}}">Agregar Empleado</a></li>
+                                <li><a href="{{url_for('agregarCliente')}}">Agregar Cliente</a></li>
+                                <li><a href="{{url_for('agregarCategoria')}}">Agregar Categoría</a></li>
+                                <li><a href="{{url_for('agregarDependiente')}}">Agregar Dependiente</a></li>
+                                <li><a href="{{url_for('agregarProducto')}}">Agregar Producto</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Funciones</a>
+                            <ul class="menu__vertical">
+                                <li><a href="{{url_for('obtenerInformacion')}}">Información de ordenes</a></li>
+                                <li><a href="{{url_for('productos_no_disponibles')}}">Mostrar platillos no disponibles</a></li>
+                                <li><a href="{{url_for('ventasPorFecha')}}">Ventas por fecha</a></li>
+                                <li><a href="#">Por asignar</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{url_for('obtenerInfoEmpleado')}}">Obtener información de empleado</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('agregarOrden')}}">Registrar orden</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+    <!-- Fin barra de navegacíon-->
+
+</body>
+</html>

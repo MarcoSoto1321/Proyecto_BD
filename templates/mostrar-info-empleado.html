@@ -1,0 +1,37 @@
+<!-- ESTE YA OBTIENE LA IMAGEN. FALTAN LOS DATOS DL EMPLEADO -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información empleado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+</head>
+<body>
+    <div>
+        <header>
+            <div class="back">
+                <div class="menu container">
+                    <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
+                    <input type="checkbox" id="menu">
+                    <label for="menu">
+                        <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
+                    </label>
+                    <nav class="navbar">    
+                        <ul>
+                            <li><a href="{{url_for('obtenerInfoEmpleado')}}">Buscar empleados</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!-- Fin barra de navegación-->
+    </div>
+        <h1>Mi Página con Imagen</h1>
+
+        <!-- Enlace a la imagen usando la variable proporcionada por Flask -->
+        <img src="{{ ruta_imagen }}" alt="Descripción de la imagen">
+    </div>
+    </body>
+</html>

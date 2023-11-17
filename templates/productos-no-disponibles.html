@@ -1,0 +1,44 @@
+<!-- Esto lo estoy probando yo -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platillos no disponibles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <div>
+        <header>
+            <div class="back">
+                <div class="menu container">
+                    <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
+                    <input type="checkbox" id="menu">
+                    <label for="menu">
+                        <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
+                    </label>
+                    <nav class="navbar">    
+                        <ul>
+                            <li><a href="{{url_for('inicio')}}">Inicio</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    </div>
+        <!-- Fin barra de navegacíon-->
+    <div>
+        <!-- 
+            En este caso, se deberá de solicitar el nombre del empleado deseado.
+            - Python regresará todos los registros asociadas a dicho nombre, por lo que se deberán de mostrar dichas opciones.
+            - Una vez seleccionado alguno de los empleados, se deberá de mostrar una vista con la información de dicho cliente
+        -->
+        <div>
+            <!-- Aquí vamos a procesar los platillos
+          
+          Ya los manda python como datos de tabla-->
+        
+        </div>
+    </body>
+</html>
