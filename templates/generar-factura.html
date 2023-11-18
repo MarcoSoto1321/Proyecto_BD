@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generar factura</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+    
 </head>
 
 <body>
@@ -14,19 +14,19 @@
         <header>
             <div class="back">
                 <div class="menu container">
-
+                    
                     <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
                     <input type="checkbox" id="menu">
                     <label for="menu">
                         <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
                     </label>
-
+                    
                     <nav class="navbar">    
                         <ul>
                             <li><a href="{{url_for('inicio')}}">Inicio</a></li>
                         </ul>
                     </nav>
-
+                    
                 </div>
             </div>
         </header>
@@ -40,10 +40,43 @@
             1. Si el folio de la orden es inválido, se deberá de señalizar al mesero
             2. Si el RFC existe, se generará la facturar de forma directa
             3. Si el RFC no existe, se deberá de llamar al formulario para agregar al cliente
-
+            
             Una vez que se valide todo, se deberá de generar una vista con los datos del cliente y el ticket
          -->
-
-        </div>
-    </body>
+        {% if msg %}
+        <form action="/buscar_rfc" method="POST" autocomplete="off" class="form">
+            <div class="form__container">
+                <h1 class="form__title">Ingrese el RFC del client. En caso de ya existir, se generará la factura.</h1>        
+                <div class="form__group">
+                    <div class="form__group">   
+                        <label for="folio"></label>
+                        <input type="text" id="folio" class="form__input" name="folio" placeholder=" " required readonly value="{{data}}">
+                        <span class="form_line"></span>
+                        <br>
+                        <br>
+                        <input type="text" id="rfc" class="form__input" name="rfc" placeholder=" " required>
+                        <label for="rfc" class="form__label">RFC: </label>
+                        <span class="form_line"></span>
+                    </div>
+                </div>
+                <input type="submit" class="form__submit" value="Buscar"> 
+            </div>
+        </form>
+        {% else %}
+            <form action="/buscar_orden" method="POST" autocomplete="off" class="form">
+                <div class="form__container">
+                    <h1 class="form__title">Para generar la factura se necesita la orden.</h1>        
+                    <div class="form__group">
+                        <div class="form__group">   
+                            <input type="text" id="folio" class="form__input" name="folio" placeholder=" " required>
+                            <label for="folio" class="form__label">Ingrese el folio de la orden (ORD-###): </label>
+                            <span class="form_line"></span>
+                        </div>
+                    </div>
+                    <input type="submit" class="form__submit" value="Buscar"> 
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</body>
 </html>

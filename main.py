@@ -17,6 +17,7 @@ app = Flask(__name__)
 #=====================================================
 
 datos_empleado = []
+rfc = None
 
 # En todos los casos, sería bueno agregar una ventana de alerta cuando suceda un error
 
@@ -37,7 +38,6 @@ def agregarEmpleado():
 def mostrarEmpleado():
   return render_template('mostrar-empleado.html')
 
-# ESTOY LO ESTOY PROBANDO YO
 @app.route('/obtenerInfoEmpleado')
 def obtenerInfoEmpleado():
   # Se tiene que eliminar la imagen para no tener basura en el html
@@ -85,8 +85,15 @@ def ventasPorFechas():
 def agregarOrden():
   return render_template('agregar-orden.html')
 
-# TERMINAR DE IMPLEMENTAR EL AGREGAR EMPLEADO
-#Valor "action" de la encuesta que llena el formulario
+@app.route('/agregarProductoOrden')
+def agregarProductoOrden():
+  return render_template('agregar-producto-orden.html')
+
+@app.route('/generarFactura')
+def generarFactura():
+  return render_template('generar-factura.html')
+
+
 @app.route('/agregar_empleado', methods=['POST'])
 def agregar_empleado():
   if request.method == 'POST':
@@ -120,7 +127,7 @@ def agregar_empleado():
     numero = request.form['numero']
     descripcion = request.form['descripcion']
     rol = request.form['puesto']
-
+    
     # En este punto ya se tiene toda la información
     # Una vez obtenido esto, es necesario eliminar el archivo
     try:
@@ -162,13 +169,15 @@ def agregar_empleado():
     return render_template('agregar-empleado.html',
                            msg='Metodo HTTP incorrecto')
 
-# REVISAR
+# YA QUEDÓ, PERO ESTARÍA BIEN MOSTRAR UN MENSAJE EN CASO DE QUE NO HAYA DISPONIBILIDAD DEL PRODUCTO
+@app.route('/agregar_producto_orden', methods=['POST'])
+# Me falta revisar la parte de la orden (el html en esencia ya está, solo tengo que ligarlo)
 def agregar_producto_orden():
   if request.method == 'POST':
     #Variables para ingresar a la base
-    folio_orden = request.form['']
-    id_producto_agregado = request.form['']
-    cantidad = request.form['']
+    folio_orden = request.form['folio']
+    id_producto_agregado = request.form['id_prod']
+    cantidad = request.form['cant']
 
     try:
       #Parametros para coneccion a la base
@@ -197,12 +206,12 @@ def agregar_producto_orden():
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
 
-    return render_template('agregar-empleado.html', msg='Formulario enviado')
+    return render_template('agregar-producto-orden.html', msg='Formulario enviado')
   else:
-    return render_template('agregar-empleado.html',
+    return render_template('agregar-producto-orden.html',
                            msg='Metodo HTTP incorrecto')
 
-
+# Ya quedó
 @app.route('/info_ordenes', methods=['POST'])
 def info_ordenes():
   if request.method == 'POST':
@@ -338,9 +347,7 @@ def empleado_seleccionado():
   # En este punto ya es posible utilizar la imagen
   return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=empleado)
 
-
-# Podemos comenzar a analizar esta parte
-# Falta corregir y agregar HTML
+# En este caso ya se mandan los platillos en la variable platillos (para el html): Deben de imprimirlos
 @app.route('/productos_no_disponibles')
 def productos_no_disponibles():
   try:
@@ -375,7 +382,7 @@ def productos_no_disponibles():
   # Se manda al html de productos-no-disponibles los platillos que no están disponibles, los cuales se deberán de mostrar
   return render_template('productos-no-disponibles.html', msg='Formulario enviado',platillos=records)
 
-# Revisar la información que mandamos
+# Falta mostrar la información de las ventas (es parecido a la info_productos)
 @app.route('/ventas_por_fecha', methods=['POST'])
 def ventas_por_fecha():
   if request.method == 'POST':
@@ -413,6 +420,7 @@ def ventas_por_fecha():
   # Aquí debemos de renderizar las ventas generadas (parecido al de mesero)
   return render_template('ventas-por-fecha.html', msg='Formulario enviado')
 
+# Falta mostrar la información de las ventas (es parecido a la info_productos)
 @app.route('/ventas_por_fechas',methods=['POST'])
 def ventas_por_fecha2():
     if request.method == 'POST':
@@ -454,8 +462,7 @@ def ventas_por_fecha2():
       return render_template('ventas-por-fechas.html', msg='Metodo HTTP incorrecto')  
     return render_template('ventas-por-fechas.html', msg='Formulario enviado')
 
-
-# Ya es posible agregar la categoría de forma adecuada
+# Ya está
 @app.route('/agregar_categoria', methods=['POST'])
 def agregar_categoria():
   if request.method == 'POST':
@@ -492,7 +499,8 @@ def agregar_categoria():
     return render_template('agregar-categoria.html',
                            msg='Metodo HTTP incorrecto')
 
-# REVISAR ESTA PARTE CON LA CUESTIÓN DE LA FACTURA
+# Ya está -> Falta considerar que se debe de llamar únicamente con la parte de la factura
+# Habrá que agregar un valor función booleana para determinar la existencia del RFC
 @app.route('/agregar_cliente', methods=['POST'])
 def agregar_cliente(): # Revisar que empaten los nombres
   if request.method == 'POST':
@@ -537,14 +545,15 @@ def agregar_cliente(): # Revisar que empaten los nombres
 
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
+      return render_template('agregar-cliente.html',
+                           msg='Error al agregar el cliente')
 
-    return render_template('agregar-empleado.html', msg='Formulario enviado')
+    return generar_factura(folio_orden)
   else:
-    return render_template('agregar-empleado.html',
+    return render_template('agregar-cliente.html',
                            msg='Metodo HTTP incorrecto')
 
-
-# Esta parte ya la podemos implementar
+# Ya está
 @app.route('/agregar_dependiente',methods=['POST'])
 def agregar_dependiente():
   if request.method == 'POST':
@@ -587,7 +596,7 @@ def agregar_dependiente():
     return render_template('agregar-dependiente.html',
                            msg='Metodo HTTP incorrecto')
 
-# Primero se solicita el número del mesero --> Revisar este pedo
+# Primero se solicita el número del mesero --> Revisar este pedo 
 @app.route('/agregar_orden',methods=['POST'])
 def agregar_orden():
   if request.method == 'POST':
@@ -605,24 +614,23 @@ def agregar_orden():
       cur = connection.cursor()
 
       #Instruccion a ejecutar en sintaxis postgres
-      instruction = "CALL restaurante.agregar_orden(%s);"
+      instruction = f"CALL restaurante.agregar_orden({id_mesero});"
+      print(instruction)
       #Los datos son las variables declaradas
-      data = (id_mesero)
-
       #cur.execute para ejecutar la instrucción
-      cur.execute(instruction, data)
+      cur.execute(instruction)
       connection.commit()
       cur.close()
       connection.close()
+      # En este punto ya se agregó el orden
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
-
-    return render_template('agregar-orden.html', msg='Formulario enviado')
+      return render_template('agregar-orden.html', msg='Asegúrese de ingresar el número de mesero válido')
+    return render_template('agregar-orden.html', msg='Se registró la orden. Ahora es posible registrar productos a dicha orden')
   else:
     return render_template('agregar-orden.html',
                            msg='Metodo HTTP incorrecto')
-
-
+# Ya está
 @app.route('/agregar_producto',methods=['POST'])
 def agregar_producto():
   if request.method == 'POST':
@@ -666,11 +674,82 @@ def agregar_producto():
     return render_template('agregar-producto.html',
                            msg='Metodo HTTP incorrecto')
 
+def generar_factura(folio):
+  #Variables para ingresar a la base
+  try:
+    #Parametros para coneccion a la base
+    connection = psycopg2.connect(host=host,
+                                  database=database,
+                                  user=user,
+                                  password=password)
+    #/
+  
+    # Crear un cursor para ejecutar consultas
+    cursor = connection.cursor()
+    instruction = f"SELECT * FROM restaurante.generar_factura(\'{folio}\', 'Ref1', 'Ref2');"
+    # call a stored procedure
+    cursor.execute(instruction)
+    cursor.execute('FETCH ALL IN "Ref1";')
+    tbl1 = cursor.fetchall()
+    print(tbl1)
+    cursor.execute('FETCH ALL IN "Ref2";')
+    tbl2 = cursor.fetchall()
+    print(tbl2)
+    # Cerrar el cursor y la conexión
+    cursor.close()
+    connection.close()
+  except (Exception, psycopg2.Error) as error:
+    print("Error al conectarse a la base de datos:", error)
 
-def generar_factura():
+  return render_template('mostrar-factura.html', msg='Formulario enviado',cliente=tbl1[0],ticket=tbl2)
+
+# Falta el html de este
+@app.route('/producto_mas_vendido')
+def producto_mas_vendido():
+  #Variables para ingresar a la base
+  try:
+      #Parametros para coneccion a la base
+      connection = psycopg2.connect(host=host,
+                                      database=database,
+                                      user=user,
+                                      password=password)
+      #/
+
+      # Crear un cursor para ejecutar consultas
+      cur = connection.cursor()
+
+      #Instruccion a ejecutar en sintaxis postgres
+      instruction = "CALL restaurante.producto_mas_vendido();"
+
+      #cur.execute para ejecutar la instrucción
+      cur.execute(instruction)
+      connection.commit()
+
+      # Posteriormente es necesario obtener la vista para mostrar la información del platillo más vendido
+      instruction = "SELECT * FROM restaurante.platillo_mas_vendido;"
+      cur.execute(instruction)
+      # En este caso se tiene la vista de las ventas. Puede darse el caso de que haya varios productos.
+
+      records = cur.fetchall()    
+
+      for record in records:
+          print(record)
+
+      # Se deben de mostrar todos los productos
+      cur.close()
+      connection.close()
+  except (Exception, psycopg2.Error) as error:
+      print("Error al conectarse a la base de datos:", error)
+
+  return render_template('productos-mas-vendidos.html', msg='Formulario enviado',platillos=records)
+
+# Para las facturas, primero se analizará si el RFC ya se encuentra registrado
+@app.route('/buscar_orden', methods=['POST'])
+def buscar_orden():
   if request.method == 'POST':
     #Variables para ingresar a la base
-    folio_orden = request.form['']
+    folio = request.form['folio']
+
     try:
       #Parametros para coneccion a la base
       connection = psycopg2.connect(host=host,
@@ -680,87 +759,77 @@ def generar_factura():
       #/
 
       # Crear un cursor para ejecutar consultas
-      cursor = connection.cursor()
-      instruction = "SELECT * FROM restaurante.generar_factura(%s, 'Ref1', 'Ref2');"
-      data = (folio_orden)
-      # call a stored procedure
-      cursor.execute(instruction,data)
-      cursor.execute('FETCH ALL IN "Ref1";')
-      tbl1 = cursor.fetchall()
-      print(tbl1)
-      cursor.execute('FETCH ALL IN "Ref2";')
-      tbl2 = cursor.fetchall()
-      print(tbl2)
-      # Cerrar el cursor y la conexión
-      cursor.close()
-      connection.close()
+      cur = connection.cursor()
+
+      #Instruccion a ejecutar en sintaxis postgres
+      instruction = f"SELECT * FROM restaurante.orden WHERE folio = '{folio}';"
+      #Los datos son las variables declaradas
+      #cur.execute para ejecutar la instrucción
+      cur.execute(instruction)
+      records = cur.fetchall()    
+      if len(records) == 0:
+        # Se ingresó el orden de forma incorrecta
+        cur.close()
+        connection.close()
+        return render_template('generar-factura.html')
+      else:
+        # Si existe la orden. Habrá que ver si ya se ha generado anteriormente o es necesario obtener la información del cliente
+        if records[0][4] is not(None):
+          print('Se tiene el rfc: ', records[0][4])
+          # Ya se ha generado la factura anteriormente
+          cur.close()
+          connection.close()
+          return generar_factura(folio)
+        else: # Se debe de almacenar la información del cliente
+          # En este caso valdría la pena revisar si el RFC ya está registrado para únicamente asociarlo a la respectiva orden
+          cur.close()
+          connection.close()
+          return render_template('generar-factura.html', msg='Solicitar RFC',data=folio)
 
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
-
-    return render_template('agregar-empleado.html', msg='Formulario enviado')
+      return render_template('generar-factura.html')
   else:
-    return render_template('agregar-empleado.html',
-                           msg='Metodo HTTP incorrecto')
+    return render_template('generar-factura.html')
 
-@app.route('/producto_mas_vendido',methods=['POST'])
-def producto_mas_vendido():
+
+@app.route('/buscar_rfc',methods=['POST'])
+def obtener_rfc():
   if request.method == 'POST':
     #Variables para ingresar a la base
-    try:
-        #Parametros para coneccion a la base
-        connection = psycopg2.connect(host=host,
-                                        database=database,
-                                        user=user,
-                                        password=password)
-        #/
-
-        # Crear un cursor para ejecutar consultas
-        cur = connection.cursor()
-
-        #Instruccion a ejecutar en sintaxis postgres
-        instruction = "CALL restaurante.producto_mas_vendido();"
-
-        #cur.execute para ejecutar la instrucción
-        cur.execute(instruction)
-        connection.commit()
-
-        # Posteriormente es necesario obtener la vista para mostrar la información del platillo más vendido
-        instruction = "SELECT * FROM restaurante.platillo_mas_vendido;"
-        cur.execute(instruction)
-        # En este caso se tiene la vista de las ventas. Puede darse el caso de que haya varios productos.
-
-        records = cur.fetchall()    
-
-        for record in records:
-            print(record)
-        cur.close()
-        connection.close()
-    except (Exception, psycopg2.Error) as error:
-        print("Error al conectarse a la base de datos:", error)
-
-    return render_template('agregar-empleado.html', msg='Formulario enviado')
-  else:
-    return render_template('agregar-empleado.html',
-                          msg='Metodo HTTP incorrecto')
-
-@app.route('/mostrar_empleado')
-def mostrar_empleado():
+    folio = request.form['folio']
+    rfc = request.form['rfc']
     try:
       #Parametros para coneccion a la base
-      connection = psycopg2.connect(
-          host=host,
-          database=database,
-          user=user,
-          password=password
-      )
+      connection = psycopg2.connect(host=host,
+                                    database=database,
+                                    user=user,
+                                    password=password)
+      #/
+
+      # Crear un cursor para ejecutar consultas
       cur = connection.cursor()
-      instruction = "SELECT * FROM restaurante.empleado;"
+
+      #Instruccion a ejecutar en sintaxis postgres
+      instruction = f"SELECT * FROM restaurante.cliente WHERE rfc = '{rfc}';"
+      #Los datos son las variables declaradas
+      #cur.execute para ejecutar la instrucción
       cur.execute(instruction)
-      data = cur.fetchall()
+      records = cur.fetchall()    
+      if len(records) == 0:
+        # No hay ningún cliente registrado con dicho RFC
+        cur.close()
+        connection.close()
+        return render_template('agregar-cliente.html')
+      else:
+        # Ya se ha registrado dicho cliente
+        instruction = f'UPDATE restaurante.orden SET rfc_cliente = \'{rfc}\' WHERE folio = \'{folio}\''
+        return generar_factura(folio)
     except (Exception, psycopg2.Error) as error:
-            print("Error al conectarse a la base de datos:", error)
-    return render_template('mostrar-empleado.html', empleados = data)
+      print("Error al conectarse a la base de datos:", error)
+      return render_template('generar-factura.html')
+  else:
+    return render_template('generar-factura.html')
 
 if __name__ == '__main__':
   app.run(debug=True)
