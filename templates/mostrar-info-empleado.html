@@ -27,11 +27,23 @@
             </div>
         </header>
         <!-- Fin barra de navegación-->
-    </div>
-        <h1>Mi Página con Imagen</h1>
+        <main class="card">
+            <section class="card__first-secction">
+                <img class="card__first-secction__image" src="{{ ruta_imagen }}" alt="Imagen del empleado">
+            </section>
 
-        <!-- Enlace a la imagen usando la variable proporcionada por Flask -->
-        <img src="{{ ruta_imagen }}" alt="Descripción de la imagen">
+            <section class="card__second-section">
+                <p class="card__second-section__empleado-puesto">puesto empleado</p>
+                <h2 class="card__second-section__nombre"> nombre </h2>
+                <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
+                <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
+
+                <button class="card__second-secction__button">Regresar</button>
+            </section>
+        </main>
+
+
     </div>
+
     </body>
 </html>
