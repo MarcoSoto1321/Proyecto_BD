@@ -34,18 +34,36 @@
         <!-- 
             Cuando se genere la orden, se podrá agregar productos a la orden en ese momento. Si no, se puede agregar posteriormente.
          -->
-         <form action="/agregar_orden" method="POST" autocomplete="off" class="form">
-            <div class="form__container">
-                <h1 class="form__title">Comenzar registro de orden</h1>        
-                <div class="form__group">
-                    <div class="form__group">   
-                        <input type="number" id="id_mesero" class="form__input" name="id_mesero" placeholder=" " required>
-                        <label for="id_mesero" class="form__label">Ingrese el número de empleado (mesero): </label>
-                        <span class="form_line"></span>
+        {% if msg %}
+            <p> {{msg}} </p>
+            <form action="/agregar_orden" method="POST" autocomplete="off" class="form">
+                <div class="form__container">
+                    <h1 class="form__title">Comenzar registro de orden</h1>        
+                    <div class="form__group">
+                        <div class="form__group">   
+                            <input type="number" id="id_mesero" class="form__input" name="id_mesero" placeholder=" " required>
+                            <label for="id_mesero" class="form__label">Ingrese el número de empleado (mesero): </label>
+                            <span class="form_line"></span>
+                        </div>
                     </div>
+                    <input type="submit" class="form__submit" value="Agregar"> 
                 </div>
-                <input type="submit" class="form__submit" value="Agregar">
-        </form>
-        </div>
+            </form>
+        {% else %}
+            <form action="/agregar_orden" method="POST" autocomplete="off" class="form">
+                <div class="form__container">
+                    <h1 class="form__title">Comenzar registro de orden</h1>        
+                    <div class="form__group">
+                        <div class="form__group">   
+                            <input type="number" id="id_mesero" class="form__input" name="id_mesero" placeholder=" " required>
+                            <label for="id_mesero" class="form__label">Ingrese el número de empleado (mesero): </label>
+                            <span class="form_line"></span>
+                        </div>
+                    </div>
+                    <input type="submit" class="form__submit" value="Agregar"> 
+                </div>
+            </form>
+        {% endif %}
+    </div>
     </body>
 </html>
