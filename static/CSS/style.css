@@ -303,6 +303,10 @@ body{
     font-weight: 700;
     display: block;
     margin: auto;
+    text-align: center;
+    padding: 2px 2px 0;
+    text-overflow: unset;
+    
 }
 
 .card__second-secction__button:hover{

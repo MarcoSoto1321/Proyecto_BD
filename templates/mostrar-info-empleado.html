@@ -18,16 +18,12 @@
                     <label for="menu">
                         <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
                     </label>
-                    <nav class="navbar">    
-                        <ul>
-                            <li><a href="{{url_for('obtenerInfoEmpleado')}}">Buscar empleados</a></li>
-                        </ul>
-                    </nav>
+                    
                 </div>
             </div>
         </header>
         <!-- Fin barra de navegación-->
-        <main class="card">
+        <main class="card" >
             <section class="card__first-secction">
                 <img class="card__first-secction__image" src="{{ ruta_imagen }}" alt="Imagen del empleado">
             </section>
@@ -37,8 +33,8 @@
                 <h2 class="card__second-section__nombre"> nombre </h2>
                 <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
                 <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
-
-                <button class="card__second-secction__button">Regresar</button>
+                
+                <a class="card__second-secction__button" href="{{url_for('inicio')}}">Regresar</a>
             </section>
         </main>
 
