@@ -26,6 +26,29 @@
         <main class="card" >
             <section class="card__first-secction">
                 <img class="card__first-secction__image" src="{{ ruta_imagen }}" alt="Imagen del empleado">
+                <h2 class="card__second-section__nombre"> Datos de contacto </h2>
+                <!-- Se hace un loop sobre los datos -->
+                {% for telefono in telefonos %}
+                 <p class="card__second-section__datos"> * Telefono: {{ telefono }}</p>
+                {% endfor %}
+            </section>
+
+            <section class="card__second-section">
+                <h2 class="card__second-section__nombre"> {{ datos.2 }} {{ datos.3 }} {{ datos.4 }} </h2>
+                <!-- Se hace un loop sobre los datos -->
+                <p class="card__second-section__datos"> * Fecha de nacimiento: {{ datos.5 }}</p>
+                <p class="card__second-section__datos"> * Edad: {{ datos.6 }}</p>
+                <p class="card__second-section__datos"> * Dirección: {{ datos.10 }} {{ datos.11 }}, Col. {{datos.9}}, C.P. {{datos.8}} {{ datos.7 }}</p>
+                <p class="card__second-section__empleado-puesto">Puestos de Trabajo</p>
+                {% if datos.13 %}
+                <p class="card__second-section__datos">El empleado es mesero con un horario de: {{ datos.14 }}</p>
+                {% endif %}
+                {% if datos.15 %}
+                <p class="card__second-section__datos">El empleado es administrativo con un rol de {{ datos.16 }}</p>
+                {% endif %}
+                {% if datos.17 %}
+                <p class="card__second-section__datos">El empleado es cocinero con especialidad en {{ datos.18 }}</p>
+                {% endif %}
             </section>
 
             <section class="card__second-section">

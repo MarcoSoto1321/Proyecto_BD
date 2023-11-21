@@ -112,7 +112,7 @@ def agregar_empleado():
         imagen.save(ruta_destino)
     else:
       print("No se recibió ninguna imagen")
-      return "ERROR: No se adjuntó una imagen de empleado"
+      return render_template('agregar-empleado.html', msg='Adjunte una imagen')
         # Puedes hacer más operaciones con la imagen si es necesario
     # Aquí puedes procesar los datos y realizar acciones adicionales
     # ...
@@ -125,8 +125,42 @@ def agregar_empleado():
     colonia = request.form['colonia']
     calle = request.form['calle']
     numero = request.form['numero']
-    descripcion = request.form['descripcion']
-    rol = request.form['puesto']
+    try:
+      es_mesero = request.form['mesero']
+      horario_entrada = request.form['horario_entrada']
+      horario_salida = request.form['horario_salida']
+      if horario_salida < horario_entrada:
+        return render_template('agregar-empleado.html', msg='Horario inválido')
+      horario = f"{horario_entrada} - {horario_salida}"
+      es_mesero = True
+    except:
+      es_mesero = None
+      horario = None
+    try:
+      es_cocinero = request.form['cocinero']
+      especialidad = request.form['especialidad']
+      es_cocinero = True
+    except:
+      es_cocinero = None
+      especialidad = None
+    try:
+      es_admin = request.form['administrativo']
+      rol = request.form['rol']
+      es_admin = True
+    except:
+      es_admin = None
+      rol = None
+    
+    tel = '{'
+    telefonos = request.form.getlist('telefonos')
+    for i, telefono in enumerate(telefonos):
+      if i == len(telefonos) - 1:
+        tel += telefono
+      else:
+        tel += telefono + ','
+    tel += '}'
+
+
     
     # En este punto ya se tiene toda la información
     # Una vez obtenido esto, es necesario eliminar el archivo
@@ -135,8 +169,7 @@ def agregar_empleado():
       print(f'Archivo {ruta_destino} borrado con éxito.')
     except OSError as e:
       print(f'Error al borrar el archivo: {e}')
-
-
+    
     # Hasta este punto va bien
     try:
       #Parametros para coneccion a la base
@@ -150,10 +183,11 @@ def agregar_empleado():
       cur = connection.cursor()
 
       #Instruccion a ejecutar en sintaxis postgres
-      instruction = "CALL restaurante.agregar_empleado(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      instruction = "CALL restaurante.agregar_empleado(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
       #Los datos son las variables declaradas
       data = (rfc, nombre, appat, apmat, fechanac, edad, estado, cp, colonia,
-              calle, numero, rol, descripcion, psycopg2.Binary(imagen_bytes))
+              calle, numero, es_mesero, horario, es_admin, rol, es_cocinero, especialidad,
+              psycopg2.Binary(imagen_bytes),tel)
       # Falta la parte del teléfono
       #cur.execute para ejecutar la instrucción
       cur.execute(instruction, data)
@@ -163,8 +197,7 @@ def agregar_empleado():
 
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
-
-    return render_template('agregar-empleado.html', msg='Formulario enviado')
+    return render_template('agregar-empleado.html', msg='Empleado agregado')
   else:
     return render_template('agregar-empleado.html',
                            msg='Metodo HTTP incorrecto')
@@ -230,12 +263,11 @@ def info_ordenes():
       cur = connection.cursor()
 
       #Instruccion a ejecutar en sintaxis postgres
-      instruction = "SELECT * FROM restaurante.info_ordenes(%s)"
+      instruction = f"SELECT * FROM restaurante.info_ordenes(\'{id_empleado}\')"
       #Los datos son las variables declaradas
-      data = (id_empleado)
 
       #cur.execute para ejecutar la instrucción
-      cur.execute(instruction, data)
+      cur.execute(instruction)
       records = cur.fetchall()    
       # Se tiene la información de las órdenes que ha tomado el empleado.
       for record in records:
@@ -270,7 +302,6 @@ def info_ordenes():
                            msg='Metodo HTTP incorrecto')
 
 
-# FALTA IMPLEMENTAR LA PARTE DE MOSTRAR LA INFORMACIÓN BIEN. IGUALMENTE, FALTA CONSIDERAR CUANDO VARIOS EMPLEADOS SE LLAMAN IGUAL
 @app.route('/obtener_info_empleado', methods=['POST'])
 def obtener_info_empleados():
   if request.method == 'POST':
@@ -302,7 +333,7 @@ def obtener_info_empleados():
           datos_empleado.append(record)
       # Veamos el caso en que haya un solo empleado
       if len(records) == 1:
-        imagen = records[0][13] # REVISAR LA RECUPERACIÓN DE LA IMAGEN
+        imagen = records[0][12] # REVISAR LA RECUPERACIÓN DE LA IMAGEN
         output_image_path = 'static/images/empleado.jpg'
         datos_empleado.clear()
         # Crear una imagen desde los bytes
@@ -312,9 +343,15 @@ def obtener_info_empleados():
         # En este punto ya es posible utilizar la imagen
         cur.close()
         connection.close()
+<<<<<<< HEAD
 
         return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0])
         
+=======
+        # Para los teléfonos
+        telefonos = records[0][19].split(',')
+        return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0],telefonos=telefonos)
+>>>>>>> refs/remotes/origin/master
       else:
         # Debemos mostrar la información de los empleados con el mismo nombre con la opción de seleccionar alguno
         cur.close()
@@ -340,7 +377,7 @@ def empleado_seleccionado():
   # Nada más tenemos que ver cómo eliminar la información de la variable global
   datos_empleado.clear()
   # return render_template('mostrar-info-empleado.html')
-  imagen = empleado[13]
+  imagen = empleado[12]
   output_image_path = 'static/images/empleado.jpg'
   datos_empleado.clear()
   imagen = Image.open(BytesIO(imagen))
@@ -412,6 +449,10 @@ def ventas_por_fecha():
       # Records contiene las ventas generadas en la fecha seleccionada
       for record in records:
           print(record)
+          # Obtienen las ventas
+
+      # SI obtienen que las ventas son 0, mandar un mensaje que diga eso
+      # En caso contrario, muestran la información como en info-ordenes
       cur.close()
       connection.close()
 
@@ -693,9 +734,9 @@ def generar_factura(folio):
     cursor.execute(instruction)
     cursor.execute('FETCH ALL IN "Ref1";')
     tbl1 = cursor.fetchall()
-    print(tbl1)
+    print(tbl1) # Esto contiene los datos del cliente
     cursor.execute('FETCH ALL IN "Ref2";')
-    tbl2 = cursor.fetchall()
+    tbl2 = cursor.fetchall() # El ticket
     print(tbl2)
     # Cerrar el cursor y la conexión
     cursor.close()
@@ -832,6 +873,8 @@ def obtener_rfc():
       return render_template('generar-factura.html')
   else:
     return render_template('generar-factura.html')
+
+
 
 if __name__ == '__main__':
   app.run(debug=True)
