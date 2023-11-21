@@ -312,7 +312,9 @@ def obtener_info_empleados():
         # En este punto ya es posible utilizar la imagen
         cur.close()
         connection.close()
+
         return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0])
+        
       else:
         # Debemos mostrar la información de los empleados con el mismo nombre con la opción de seleccionar alguno
         cur.close()
