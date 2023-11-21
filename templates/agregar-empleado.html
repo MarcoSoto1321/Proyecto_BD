@@ -40,7 +40,7 @@
         <!-- Fin barra de navegacíon-->
     <div>
 
-        <form action="/agregar_empleado" method="POST" autocomplete="off" class="form" enctype="multipart/form-data">
+        <form action="/agregar_empleado" method="POST" autocomplete="off" class="form" enctype="multipart/form-data" id="formulario">
             
             <div class="form__container">
                 <h2 class="form__title">Agregar empleado</h2>
@@ -120,24 +120,100 @@
                     </div>
                     
                     <legend>Puesto de Trabajo</legend>
-                    <label for="puesto">Seleccione el puesto de trabajo</label>
-                    <select id="puesto" name="puesto">
-                        <option id="SelectDefault">--Seleccione una opcion--</option>
-                        <option value="Administrativo">Administrativo</option>
-                        <option value="Mesero">Mesero</option>
-                        <option value="Cocinero">Cocinero</option>
-                    </select> 
-                    
-                    <div>
-                        <label for="descripcion">Descripción</label>
-                        <input type="text" id="descripcion" name="descripcion" placeholder="descripcion">
-                        <span class="form_line"></span>
+                    <label for="mesero">Mesero:</label>
+                    <input type="checkbox" id="mesero" name="mesero" value="mesero">
+
+                    <label for="administrativo">Administrativo:</label>
+                    <input type="checkbox" id="administrativo" name="administrativo" value="administrativo">
+
+                    <label for="cocinero">Cocinero:</label>
+                    <input type="checkbox" id="cocinero" name="cocinero" value="cocinero">
+
+                    <div id="descripcionMesero" style="display: none;">
+                        <label for="horario_entrada">Horario de entrada para Mesero:</label>
+                        <input type="time" id="horario_entrada" name="horario_entrada">
+                        <br>
+                        <label for="horario_salida">Horario de salida para Mesero:</label>
+                        <input type="time" id="horario_salida" name="horario_salida">
+                        <br>
+                    </div>
+
+                    <div id="descripcionCocinero" style="display: none;">
+                        <label for="especialidad">Especialidad como cocinero:</label>
+                        <input type="text" id="especialidad" name="especialidad">
+                        <br>
+                    </div>
+
+                    <div id="descripcionAdministrativo" style="display: none;">
+                        <label for="rol">Rol como administrativo:</label>
+                        <input type="text" id="rol" name="rol">
+                        <br>
+                    </div>
+
+                    <div id="telefonos">
+                        <label for="telefono1">Teléfono 1:</label>
+                        <input type="tel" id="telefono1" name="telefonos" required>
+                        <button type="button" onclick="agregarTelefono()">Agregar Teléfono</button>
                     </div>
                     
-                        <input type="submit" class="form__submit" value="Agregar">
-                    
+                    <input type="submit" class="form__submit" value="Agregar">
                 </div>
             </form>
         </div>
+
+        <script>
+            document.getElementById("formulario").addEventListener("change", actualizarHTML);
+    
+            function actualizarHTML() {
+                var meseroCheckbox = document.getElementById("mesero");
+                var administrativoCheckbox = document.getElementById("administrativo");
+                var cocineroCheckbox = document.getElementById("cocinero");
+                var descripcionMeseroDiv = document.getElementById("descripcionMesero");
+                var descripcionCocineroDiv = document.getElementById("descripcionCocinero");
+                var descripcionAdministrativoDiv = document.getElementById("descripcionAdministrativo");
+    
+                // Lógica para actualizar el contenido según la selección
+                if (meseroCheckbox.checked) {
+                    descripcionMeseroDiv.style.display = 'block';
+                } else {
+                    descripcionMeseroDiv.style.display = 'none';
+                }
+
+                if (administrativoCheckbox.checked) {
+                    descripcionAdministrativoDiv.style.display = 'block';
+                } else {
+                    descripcionAdministrativoDiv.style.display = 'none';
+                }
+
+                if (cocineroCheckbox.checked) {
+                    descripcionCocineroDiv.style.display = 'block';
+                } else {
+                    descripcionCocineroDiv.style.display = 'none';
+                }
+            }
+
+            function agregarTelefono() {
+                var contenedorTelefonos = document.getElementById("telefonos");
+
+                // Obtener el número de teléfonos actuales en el formulario
+                var numeroTelefonos = document.querySelectorAll('[name="telefonos"]').length + 1;
+
+                // Crear un nuevo campo de entrada de teléfono
+                var nuevoTelefono = document.createElement("input");
+                nuevoTelefono.type = "tel";
+                nuevoTelefono.name = "telefonos";
+                nuevoTelefono.id = "telefono" + numeroTelefonos;
+                nuevoTelefono.required = true;
+
+                // Crear una etiqueta para el nuevo campo de teléfono
+                var nuevaEtiqueta = document.createElement("label");
+                nuevaEtiqueta.htmlFor = "telefono" + numeroTelefonos;
+                nuevaEtiqueta.textContent = "Teléfono " + numeroTelefonos + ":";
+
+                // Agregar el nuevo campo de entrada de teléfono y la etiqueta al contenedor
+                contenedorTelefonos.appendChild(nuevaEtiqueta);
+                contenedorTelefonos.appendChild(nuevoTelefono);
+             }
+        </script>
     </body>
 </html>

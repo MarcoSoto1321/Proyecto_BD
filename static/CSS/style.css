@@ -322,6 +322,8 @@ body{
         height: 410px;
         display: flex;
         margin: 175px auto 75px;
+        overflow-y: scroll;
+
     }
 
     .card__first-section{
@@ -345,5 +347,3 @@ body{
         font-size: 0.95em;
         line-height: 22px;
     }
-
-}
