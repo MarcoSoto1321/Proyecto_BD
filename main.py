@@ -6,7 +6,7 @@ from PIL import Image
 import os
 
 host = "localhost"
-database = "prueba_restaurante"
+database = "restaurante_bd"
 user = "postgres"
 password = "postgres"
 
