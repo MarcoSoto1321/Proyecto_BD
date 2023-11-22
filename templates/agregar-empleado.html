@@ -8,35 +8,37 @@
     
 </head>
 
-<body>
+<body class="fondo__pages">
 <!-- Ejemplo para mostrar mensajes del latex 
     {% if msg %}
     <p class="msg">{{ msg }}</p>
     {% endif %}
 
 -->    <!--Barra de navegacíon-->
-    <div>
+<div>
 
-        <header>
-            <div class="back">
-                <div class="menu container">
-                    
-                    <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
-                    <input type="checkbox" id="menu">
-                    <label for="menu">
-                        <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
-                    </label>
-                    
-                    <nav class="navbar">    
-                        <ul>
-                            <li><a href="{{url_for('inicio')}}">Inicio</a></li>
-                        </ul>
-                    </nav>
-                    
-                </div>
-            </div>
-        </header>
-    </div>
+    <header class="header-inpages">
+
+        <div class="menu container">
+
+            <a class="logo" href="{{url_for('inicio')}}">COFFEE</a>
+            <input type="checkbox" id="menu">
+            <label for="menu">
+                <img src="{{ url_for('static', filename='images/menu.png') }}" class="menu-icono" alt="">
+            </label>
+
+            <nav class="navbar">    
+                <ul class="menu__horizontal">
+                    <li>
+                        <a href="{{url_for('inicio')}}">Inicio</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+</header>
+</div>
         <!-- Fin barra de navegacíon-->
     <div>
 
