@@ -343,15 +343,12 @@ def obtener_info_empleados():
         # En este punto ya es posible utilizar la imagen
         cur.close()
         connection.close()
-<<<<<<< HEAD
 
         return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0])
         
-=======
         # Para los teléfonos
         telefonos = records[0][19].split(',')
         return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0],telefonos=telefonos)
->>>>>>> refs/remotes/origin/master
       else:
         # Debemos mostrar la información de los empleados con el mismo nombre con la opción de seleccionar alguno
         cur.close()
