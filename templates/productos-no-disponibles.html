@@ -34,28 +34,34 @@
     </header>
     </div>
         <!-- Fin barra de navegacíon-->
-          <div>
-              <form action="/productos_no_disponibles" method="POST" autocomplete="off" class="form">
-                  <div class="form__container">
-                      <h1 class="form__title">Productos no disponibles</h1>
-                      <div>
-                        {% for platillo in platillos %}
-                            <p>Nombre del producto: {{platillo.0}}</p>
-                        {% endfor %}
-                      </div>
 
+        <div class="menu__productos">
+            <header>
+                <h1 class="title__menu">Productos no disponibles</h1>
+                <p class="established">pikivillas's coffee</p>
+                <br>
+    
+                <header>
+                    <hr class="meun__line">
+                    <section>
+                        <br>
+                        <h2 class="title__product">coffee</h2>
+                        <article class="item">
+                            {% for platillo in platillos %}
+                            <p class="flavor__nv">{{platillo.0}}</p><p class="price_nv">. . . . . . . . . .</p> <br>
+                            {% endfor %}
+                        </article>
+    
+    
+                    </section>
 
-              </form>
-          <!-- 
-              En este caso, se deberá de solicitar el nombre del empleado deseado.
-              - Python regresará todos los registros asociadas a dicho nombre, por lo que se deberán de mostrar dichas opciones.
-              - Una vez seleccionado alguno de los empleados, se deberá de mostrar una vista con la información de dicho cliente
-          --></div>
-
-            <!-- Aquí vamos a procesar los platillos
-          
-          Ya los manda python como datos de tabla-->
-        
+                </header>
+            </header>
         </div>
+    
+    
+
+
+
     </body>
 </html>

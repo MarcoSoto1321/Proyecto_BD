@@ -125,6 +125,7 @@ def agregar_empleado():
     colonia = request.form['colonia']
     calle = request.form['calle']
     numero = request.form['numero']
+    sueldo = request.form['sueldo']
     try:
       es_mesero = request.form['mesero']
       horario_entrada = request.form['horario_entrada']
@@ -150,7 +151,7 @@ def agregar_empleado():
     except:
       es_admin = None
       rol = None
-    
+
     tel = '{'
     telefonos = request.form.getlist('telefonos')
     for i, telefono in enumerate(telefonos):
@@ -161,7 +162,7 @@ def agregar_empleado():
     tel += '}'
 
 
-    
+
     # En este punto ya se tiene toda la información
     # Una vez obtenido esto, es necesario eliminar el archivo
     try:
@@ -169,7 +170,7 @@ def agregar_empleado():
       print(f'Archivo {ruta_destino} borrado con éxito.')
     except OSError as e:
       print(f'Error al borrar el archivo: {e}')
-    
+
     # Hasta este punto va bien
     try:
       #Parametros para coneccion a la base
@@ -183,11 +184,11 @@ def agregar_empleado():
       cur = connection.cursor()
 
       #Instruccion a ejecutar en sintaxis postgres
-      instruction = "CALL restaurante.agregar_empleado(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+      instruction = "CALL restaurante.agregar_empleado(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
       #Los datos son las variables declaradas
       data = (rfc, nombre, appat, apmat, fechanac, edad, estado, cp, colonia,
               calle, numero, es_mesero, horario, es_admin, rol, es_cocinero, especialidad,
-              psycopg2.Binary(imagen_bytes),tel)
+              psycopg2.Binary(imagen_bytes),tel,sueldo)
       # Falta la parte del teléfono
       #cur.execute para ejecutar la instrucción
       cur.execute(instruction, data)
@@ -343,16 +344,14 @@ def obtener_info_empleados():
         # En este punto ya es posible utilizar la imagen
         cur.close()
         connection.close()
-
-        return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0])
-        
         # Para los teléfonos
-        telefonos = records[0][19].split(',')
+        telefonos = records[0][20].split(',')
         return render_template('mostrar-info-empleado.html',ruta_imagen=output_image_path,datos=records[0],telefonos=telefonos)
       else:
         # Debemos mostrar la información de los empleados con el mismo nombre con la opción de seleccionar alguno
         cur.close()
         connection.close()
+        print("Hola")
         # En datos_empleado se tienen todos los registros de los trabajadores. Estos los mandaremos para que se seleccione el deseado
         return render_template('obtener-info-empleado.html',datos=datos_empleado)
 
@@ -723,7 +722,7 @@ def generar_factura(folio):
                                   user=user,
                                   password=password)
     #/
-  
+
     # Crear un cursor para ejecutar consultas
     cursor = connection.cursor()
     instruction = f"SELECT * FROM restaurante.generar_factura(\'{folio}\', 'Ref1', 'Ref2');"

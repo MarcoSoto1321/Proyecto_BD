@@ -554,3 +554,105 @@ body{
         line-height: 22px;
     }
 }
+
+
+.menu__productos{
+    width: 80%;
+    max-width: 700px;
+    background-color: #c6c6c6;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+    box-shadow: 0 5px 10px -5px rbg(0 0 0 / 30%);
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    
+}
+
+.established{
+    text-align: center;
+    font-style: italic;
+}
+.title__menu {
+    text-align: center;
+}
+.title__product{
+    text-align: center;
+}
+
+.item p{
+    display: inline-block;
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.flavor__nv {
+    width: 50%;
+    text-align: left;    
+}
+
+.price_nv{
+    width: 50%;
+    text-align: right;
+}
+
+.id_v{
+    width: 15%;
+    text-align: left;
+    color: #706c6c;
+}
+
+.flavor {
+    width: 35%;
+    text-align: left;    
+}
+
+.sells{
+    width: 15%;
+    text-align: center; 
+}
+
+.price {
+    width: 15%;
+    text-align: right;    
+}
+
+.id_v-c{
+    width: 15%;
+    text-align: left;
+    color: #706c6c;
+}
+
+.flavor-c {
+    width: 35%;
+    text-align: left;    
+    color: #706c6c; 
+}
+
+.sells-c{
+    width: 15%;
+    text-align: center; 
+    color: #706c6c; 
+}
+
+.price-c {
+    width: 15%;
+    text-align: right;  
+    color: #706c6c;  
+}
+
+.meun__line{
+    height: 2px;
+    background-color: #583131;
+    border-color: #583131;
+}
+
+.meun__line-ventas{
+    height: 1px;
+    background-color: #706c6c;
+    border-color: #706c6c;
+}

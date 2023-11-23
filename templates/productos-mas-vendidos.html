@@ -33,23 +33,34 @@
     </header>
     </div>
         <!-- Fin barra de navegacíon-->
-        <div>
-            <form action="/productos_mas_vendidos" method="POST" autocomplete="off" class="form">
-                <div class="form__container">
-                    <h1 class="form__title">Productos más vendidos</h1>
-                    <div>
-                      {% for platillo in platillos %}
-                          <p>ID: {{platillo.0}}: Nombre: {{platillo.1}} Precio: {{platillo.3}} Ventas:{{platillo.7}}</p>
-                      {% endfor %}
-                    </div>
+        <div class="menu__productos">
+            <header>
+                <h1 class="title__menu">Productos mas vendidos</h1>
+                <p class="established">pikivillas's coffee</p>
+                <br>
+    
+                <header>
+                    <hr class="meun__line">
+                    <section>
+                        <br>
+                        <h2 class="title__product">coffee</h2>
+                        <article class="item">
+                            <p class="id_v-c">ID</p> <p class="flavor-c">Producto</p> <p class="sells-c">Ventas</p> <p class="price-c">Precio</p>
+                            <hr class=".meun__line-ventas"><br>
+                            {% for platillo in platillos %}
+                            <div class="productos__vendidos">
+                                <p class="id_v">id:{{platillo.0}}</p> <p class="flavor">{{platillo.1}}</p> <p class="sells">{{platillo.7}}</p> <p class="price">{{platillo.3}}</p>
+                            </div>
+                            {% endfor %}
+                        </article>
+    
+    
+                    </section>
 
+                </header>
+            </header>
+        </div>
 
-            </form>
-        <!-- 
-            En este caso, se deberá de solicitar el nombre del empleado deseado.
-            - Python regresará todos los registros asociadas a dicho nombre, por lo que se deberán de mostrar dichas opciones.
-            - Una vez seleccionado alguno de los empleados, se deberá de mostrar una vista con la información de dicho cliente
-        --></div>
 
         <!-- 
             En este caso, se deberá de solicitar el nombre del empleado deseado.

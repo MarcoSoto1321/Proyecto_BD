@@ -30,6 +30,12 @@
             </div>
 
     </header>
+
+    
+
+
+
+
     </div>
         <!-- Fin barra de navegacíon-->
     <div>
@@ -56,9 +62,10 @@
             {% else %}
                 <h2> {{ msg }} </h2>
                 {% if datos %}
+                
                 <ul>
-                    <li>Número de órdenes tomadas: {{ numero }}</li>
-                    <li>Total de ganancias generadas: {{ total }}</li>
+                    <h3 class="txt-p">Número de órdenes tomadas: {{ numero }}</h3><br>
+                    <h3 class="txt-p">Total de ganancias generadas: {{ total }}</h3>
                 </ul>
                 {% endif %}
             {% endif %}
