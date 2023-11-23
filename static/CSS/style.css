@@ -693,6 +693,10 @@ body{
     width: 40%;
     text-align: left;  
 }
+.ticket__value-t{
+    width: 40%;
+    text-align: right;  
+}
 
 .ticket__prod-t{
     width: 33%;

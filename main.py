@@ -749,7 +749,7 @@ def generar_factura(folio):
   except (Exception, psycopg2.Error) as error:
     print("Error al conectarse a la base de datos:", error)
 
-  return render_template('mostrar-factura.html', msg='Formulario enviado',cliente=tbl1[0],ticket=tbl2,)
+  return render_template('mostrar-factura.html', msg='Formulario enviado',cliente=tbl1[0],ticket=tbl2,orden=tbl3[0],fecha=str(tbl3[0][1]).split('.')[0])
 
 # Falta el html de este
 @app.route('/producto_mas_vendido')

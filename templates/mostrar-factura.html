@@ -73,8 +73,18 @@
                             {% for tickets in ticket %}
                             <p class="ticket__prod">{{tickets.0}}</p><p class="ticket__cant">{{tickets.1}}</p><p class="ticket__price">{{tickets.2}}</p><br>
                             {% endfor %}
+                            <p class="ticket__data">Total</p><p class="ticket__value-t">{{orden.2}}</p><br>
                         </article>
-    
+                        <br><h3 class="title__product">Datos Adicionales</h3>
+                        <article class="item">
+                            <p class="ticket__data-h">Datos</p><p class="ticket__value-h">Valor</p><br>
+                            <hr class=".meun__line-ventas"><br>
+                            <p class="ticket__data">Folio</p><p class="ticket__value">{{orden.0}}</p><br>
+                            <p class="ticket__data">Fecha</p><p class="ticket__value">{{fecha}}</p><br>
+                            <p class="ticket__data">Mesero</p><p class="ticket__value">{{orden.3}}</p><br>
+
+                            
+                        </article>
     
                     </section>
 
