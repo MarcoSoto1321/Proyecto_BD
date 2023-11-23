@@ -123,14 +123,14 @@
                 </div>
                 
                 <legend>Puesto de Trabajo</legend>
-                <label for="mesero">Mesero:</label>
-                <input type="checkbox" id="mesero" name="mesero" value="mesero">
+                <input type="checkbox" id="mesero" name="mesero" value="mesero" class="form__imput-chk">
+                <label for="mesero" id="mesero" class="form__label-chk">Mesero:</label>
 
-                <label for="administrativo">Administrativo:</label>
-                <input type="checkbox" id="administrativo" name="administrativo" value="administrativo">
+                <input type="checkbox" id="administrativo" name="administrativo" value="administrativo" class="form__imput-chk">
+                <label for="administrativo" id="administrativo" class="form__label-chk">Administrativo:</label>
 
-                <label for="cocinero">Cocinero:</label>
-                <input type="checkbox" id="cocinero" name="cocinero" value="cocinero">
+                <input type="checkbox" id="cocinero" name="cocinero" value="cocinero" class="form__imput-chk">
+                <label for="cocinero" id="cocinero" class="form__label-chk">Cocinero:</label>
 
                 <div id="descripcionMesero" style="display: none;">
                     <label for="horario_entrada">Horario de entrada para Mesero:</label>
@@ -153,11 +153,14 @@
                     <br>
                 </div>
 
-                <div id="telefonos">
-                    <label for="telefono1">Teléfono 1:</label>
-                    <input type="tel" id="telefono1" name="telefonos" required>
-                    <button type="button" onclick="agregarTelefono()">Agregar Teléfono</button>
+                <div class="form__group" id="telefonos">
+                    <input type="tel" class="form__input" id="telefono1" name="telefonos" placeholder=" " required>
+                    <label for="telefono1" class="form__label">Teléfono 1:</label>
+                    <span class="form__line"></span>
                 </div>
+
+                <button type="button" onclick="agregarTelefono()">Agregar Teléfono</button>
+
                 
                 <input type="submit" class="form__submit" value="Agregar">
             </div>
@@ -201,22 +204,37 @@
                 // Obtener el número de teléfonos actuales en el formulario
                 var numeroTelefonos = document.querySelectorAll('[name="telefonos"]').length + 1;
 
+                var nuevoContenedor = document.createElement("div");
+                nuevoContenedor.classList.add("form__group");
                 // Crear un nuevo campo de entrada de teléfono
                 var nuevoTelefono = document.createElement("input");
                 nuevoTelefono.type = "tel";
                 nuevoTelefono.name = "telefonos";
                 nuevoTelefono.id = "telefono" + numeroTelefonos;
                 nuevoTelefono.required = true;
+                nuevoTelefono.placeholder = " ";
+                nuevoTelefono.classList.add("form__input");
 
                 // Crear una etiqueta para el nuevo campo de teléfono
                 var nuevaEtiqueta = document.createElement("label");
                 nuevaEtiqueta.htmlFor = "telefono" + numeroTelefonos;
                 nuevaEtiqueta.textContent = "Teléfono " + numeroTelefonos + ":";
+                nuevaEtiqueta.classList.add("form__label");
 
+
+                var nuevoSpan = document.createElement("span");
+                nuevoSpan.classList.add("form__line");
                 // Agregar el nuevo campo de entrada de teléfono y la etiqueta al contenedor
                 contenedorTelefonos.appendChild(nuevaEtiqueta);
                 contenedorTelefonos.appendChild(nuevoTelefono);
-             }
+                nuevoContenedor.appendChild(nuevoSpan);
+
+                // Agregar el contenedor al contenedor principal
+                contenedorTelefonos.appendChild(nuevoContenedor);
+                nuevoContenedor.appendChild(document.createElement("br"));
+
+                
+            }
         </script>
     </body>
 </html>

@@ -273,6 +273,8 @@ def info_ordenes():
       # Se tiene la información de las órdenes que ha tomado el empleado.
       for record in records:
           print(record)
+
+
       cur.close()
       connection.close()
       numero, total = records[0]
@@ -443,21 +445,20 @@ def ventas_por_fecha():
       # Recuperar los resultados de la consulta
       records = cur.fetchall()    
       # Records contiene las ventas generadas en la fecha seleccionada
-      for record in records:
-          print(record)
-          # Obtienen las ventas
 
       # SI obtienen que las ventas son 0, mandar un mensaje que diga eso
       # En caso contrario, muestran la información como en info-ordenes
       cur.close()
       connection.close()
-
+      numero, total = records[0]
+      if numero == 0:
+        return render_template('ventas-por-fecha.html', msg='No hay ventas registradas en esa fecha')
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
   else:
-    return render_template('ventas-por-fecha.html', msg='Metodo HTTP incorrecto')  
+      return render_template('ventas_por_fecha.html')
   # Aquí debemos de renderizar las ventas generadas (parecido al de mesero)
-  return render_template('ventas-por-fecha.html', msg='Formulario enviado')
+  return render_template('ventas-por-fecha.html', msg='Se obtuvieron los siguientes datos para la fecha: ' ,numero=numero,total=total,datos=records)
 
 # Falta mostrar la información de las ventas (es parecido a la info_productos)
 @app.route('/ventas_por_fechas',methods=['POST'])
@@ -487,19 +488,20 @@ def ventas_por_fecha2():
         records = cur.fetchall()    
 
         # Aquí se tienen las ventas dadas en el intervalo de fechas dado
-        for record in records:
-            print(record)
+
 
         connection.commit()
         cur.close()
         connection.close()
-
+        numero, total = records[0]
+        if numero == 0:
+          return render_template('ventas-por-fechas.html', msg='No hay ventas registradas en esa fecha')
 
       except (Exception, psycopg2.Error) as error:
         print("Error al conectarse a la base de datos:", error)
     else:
       return render_template('ventas-por-fechas.html', msg='Metodo HTTP incorrecto')  
-    return render_template('ventas-por-fechas.html', msg='Formulario enviado')
+    return render_template('ventas-por-fechas.html', msg='Se obtuvieron los siguientes datos para las fechas: ',numero=numero,total=total,datos=records)
 
 # Ya está
 @app.route('/agregar_categoria', methods=['POST'])
@@ -593,7 +595,7 @@ def agregar_cliente(): # Revisar que empaten los nombres
                            msg='Metodo HTTP incorrecto')
 
 # Ya está
-@app.route('/agregar_dependiente',methods=['POST'])
+@app.route('/agregar_dependiente',methods=['%POST'])
 def agregar_dependiente():
   if request.method == 'POST':
     #Variables para ingresar a la base
@@ -664,8 +666,8 @@ def agregar_orden():
       # En este punto ya se agregó el orden
     except (Exception, psycopg2.Error) as error:
       print("Error al conectarse a la base de datos:", error)
-      return render_template('agregar-orden.html', msg='Asegúrese de ingresar el número de mesero válido')
-    return render_template('agregar-orden.html', msg='Se registró la orden. Ahora es posible registrar productos a dicha orden')
+      return render_template('agregar-orden.html', msg='Ingrese un número de mesero válido.')
+    return render_template('agregar-orden.html', msg='Se registró la orden. Ahora es posible registrar productos a dicha orden.')
   else:
     return render_template('agregar-orden.html',
                            msg='Metodo HTTP incorrecto')
@@ -681,6 +683,10 @@ def agregar_producto():
     receta = request.form['receta']
     id_categoria = request.form['id_cat']
 
+    if disponibilidad == 'on':
+      disponibilidad = True
+    else:
+      disponibilidad = False
 
     try:
       #Parametros para coneccion a la base
@@ -725,7 +731,7 @@ def generar_factura(folio):
 
     # Crear un cursor para ejecutar consultas
     cursor = connection.cursor()
-    instruction = f"SELECT * FROM restaurante.generar_factura(\'{folio}\', 'Ref1', 'Ref2');"
+    instruction = f"SELECT * FROM restaurante.generar_factura(\'{folio}\', 'Ref1', 'Ref2', 'Ref3');"
     # call a stored procedure
     cursor.execute(instruction)
     cursor.execute('FETCH ALL IN "Ref1";')
@@ -734,13 +740,16 @@ def generar_factura(folio):
     cursor.execute('FETCH ALL IN "Ref2";')
     tbl2 = cursor.fetchall() # El ticket
     print(tbl2)
+    cursor.execute('FETCH ALL IN "Ref3";')
+    tbl3 = cursor.fetchall()
+    print(tbl3)
     # Cerrar el cursor y la conexión
     cursor.close()
     connection.close()
   except (Exception, psycopg2.Error) as error:
     print("Error al conectarse a la base de datos:", error)
 
-  return render_template('mostrar-factura.html', msg='Formulario enviado',cliente=tbl1[0],ticket=tbl2)
+  return render_template('mostrar-factura.html', msg='Formulario enviado',cliente=tbl1[0],ticket=tbl2,)
 
 # Falta el html de este
 @app.route('/producto_mas_vendido')
@@ -773,7 +782,6 @@ def producto_mas_vendido():
 
       for record in records:
           print(record)
-
       # Se deben de mostrar todos los productos
       cur.close()
       connection.close()
