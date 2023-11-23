@@ -37,7 +37,6 @@
         <main class="card" >
             <section class="card__first-secction">
                 <img class="card__first-secction__image" src="{{ ruta_imagen }}" alt="Imagen del empleado">
-                <h2 class="card__second-section__nombre"> Datos de contacto </h2>
                 <!-- Se hace un loop sobre los datos -->
                 {% for telefono in telefonos %}
                  <p class="card__second-section__datos"> * Telefono: {{ telefono }}</p>
@@ -62,14 +61,6 @@
                 {% endif %}
             </section>
 
-            <section class="card__second-section">
-                <p class="card__second-section__empleado-puesto">puesto empleado</p>
-                <h2 class="card__second-section__nombre"> nombre </h2>
-                <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
-                <p class="card__second-section__datos">aqui van los campos de los daots, se replica la seccion segun la cantidad de datos</p>
-                
-                <a class="card__second-secction__button" href="{{url_for('inicio')}}">Regresar</a>
-            </section>
         </main>
 
 

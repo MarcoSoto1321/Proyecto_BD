@@ -4,6 +4,8 @@ import base64
 from io import BytesIO
 from PIL import Image
 import os
+from psycopg2 import sql
+
 
 host = "localhost"
 database = "restaurante_bd"

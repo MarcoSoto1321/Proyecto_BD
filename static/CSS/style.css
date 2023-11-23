@@ -480,7 +480,7 @@ body{
     transform: rotate(0deg);
 }
 .form__imput-chk:checked + .form__label-chk:before{
-    color: #583131;
+    color: #c6c6c6;
     content: '\f00c';
     font-family: 'FontAwesome';
     transform: rotate(360deg);
@@ -550,8 +550,8 @@ body{
 /*card desktop*/
 @media (min-width: 750px) {
     .card{
-        width: 600px;
-        height: 410px;
+        width: 700px;
+        height: 400px;
         display: flex;
         margin: 175px auto 75px;
         overflow-y: scroll;
@@ -559,12 +559,13 @@ body{
     }
 
     .card__first-section{
-        width: 300px;
+        width: 200px;
     }
 
     .card__second-secction{
         width: 300px;
     }
+
 
     .card__second-section__empleado-puesto{
         margin: 32px 24px 16px 24px;
