@@ -645,6 +645,62 @@ body{
     color: #706c6c;  
 }
 
+
+.ticket__data-h{
+    width: 50%;
+    text-align: center;  
+    color: #706c6c; 
+}
+
+.ticket__value-h{
+    width: 50%;
+    text-align: center;  
+    color: #706c6c; 
+}
+
+.ticket__data{
+    width: 60%;
+    text-align: left;  
+}
+
+.ticket__value{
+    width: 40%;
+    text-align: left;  
+}
+
+.ticket__prod-t{
+    width: 33%;
+    text-align: left;  
+    color: #706c6c; 
+}
+
+.ticket__cant-t{
+    width: 33%;
+    text-align: center;  
+    color: #706c6c; 
+}
+
+.ticket__price-t{
+    width: 33%;
+    text-align: right; 
+    color: #706c6c; 
+}
+.ticket__prod{
+    width: 33%;
+    text-align: left;  
+}
+
+.ticket__cant{
+    width: 33%;
+    text-align: center;  
+}
+
+.ticket__price{
+    width: 33%;
+    text-align: right; 
+}
+
+
 .meun__line{
     height: 2px;
     background-color: #583131;

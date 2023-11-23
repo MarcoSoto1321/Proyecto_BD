@@ -34,6 +34,58 @@
     </header>
     </div>
         <!-- Fin barra de navegacíon-->
+        <div class="menu__productos">
+            <header>
+                <h1 class="title__menu">Ticket</h1>
+                <p class="established">pikivillas's coffee</p>
+                <br>
+    
+                <header>
+                    <hr class="meun__line">
+                    <section>
+                        <br>
+                        <h3 class="title__product">Cliente</h3>
+                        <article class="item">
+                            <p class="ticket__data-h">Datos</p><p class="ticket__value-h">Valor</p><br>
+                            <hr class=".meun__line-ventas"><br>
+                            <p class="ticket__data">RFC</p><p class="ticket__value">{{cliente.0}}</p><br>
+                            <p class="ticket__data">NOMBRE</p><p class="ticket__value">{{cliente.1}}</p><br>
+                            <p class="ticket__data">Ap. Paterno</p><p class="ticket__value">{{cliente.2}}</p><br>
+                            <p class="ticket__data">Ap. Materno</p><p class="ticket__value">{{cliente.3}}</p><br>
+                            <p class="ticket__data">Fecha Nac.</p><p class="ticket__value">{{cliente.4}}</p><br>
+                            <p class="ticket__data">Correo</p><p class="ticket__value">{{cliente.10}}</p><br>
+                            <p class="ticket__data">Razón Social</p><p class="ticket__value">{{cliente.11}}</p><br>
+                        </article>
+                        <br><h3 class="title__product">Vivienda</h3>
+                        <article class="item">
+                            <p class="ticket__data-h">Datos</p><p class="ticket__value-h">Valor</p><br>
+                            <hr class=".meun__line-ventas"><br>
+                            <p class="ticket__data">Ciudad</p><p class="ticket__value">{{cliente.5}}</p><br>
+                            <p class="ticket__data">Codigo Postal</p><p class="ticket__value">{{cliente.6}}</p><br>
+                            <p class="ticket__data">Colonia</p><p class="ticket__value">{{cliente.7}}</p><br>
+                            <p class="ticket__data">Calle</p><p class="ticket__value">{{cliente.8}}</p><br>
+                            <p class="ticket__data">Número</p><p class="ticket__value">{{cliente.9}}</p><br>
+                        </article>
+                        <br><h3 class="title__product">Productos</h3>
+                        <article class="item">
+                            <p class="ticket__prod-t">Producto</p><p class="ticket__cant-t">Cantidad</p><p class="ticket__price-t">Precio</p><br>
+                            <hr class=".meun__line-ventas"><br>
+                            {% for tickets in ticket %}
+                            <p class="ticket__prod">{{tickets.0}}</p><p class="ticket__cant">{{tickets.1}}</p><p class="ticket__price">{{tickets.2}}</p><br>
+                            {% endfor %}
+                        </article>
+    
+    
+                    </section>
+
+                </header>
+            </header>
+        </div>
+
+
+
+
+
     <div>
         <!-- 
             En este caso, se deberá de solicitar el nombre del empleado deseado.
@@ -46,7 +98,7 @@
                 <h2 class="form__title">Se obtuvieron los registros siguientes: </h2>
                 <div class="form__group">
                     <!-- Aquí debe de ir toda la información del cliente (checar el número de campos) -->
-                    <p>Información del cliente: {{cliente.0}}</p>
+                    <p>Información del cliente: {{cliente.0}} {{cliente.1}}</p>
                     <!-- Igualmente se tiene el ticket, que es un conjunto de tuplas con la información de los productos -->
                     <!-- Eso igual lo deberán de mostrar aquí -->
                 </div>
