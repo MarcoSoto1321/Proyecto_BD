@@ -489,17 +489,21 @@ body{
 
 .card{
     border: 1px;
-    width: 314px;
+    width: 514px;
     height: auto;
     border-radius: 12px;
-    overflow: hidden;
     margin: 68px auto;
     background-color: #c6c6c6;
 }
-
+.img__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+}
 .card_first-section_image{
     width: 10%;
-
+    border-radius: 0;
 }
 
 .card__second-section__empleado-puesto{
@@ -548,39 +552,7 @@ body{
 }
 
 /*card desktop*/
-@media (min-width: 750px) {
-    .card{
-        width: 700px;
-        height: 450px;
-        display: flex;
-        margin: 175px auto 75px;
-        overflow-y: scroll;
 
-    }
-
-    .card__first-section{
-        width: 200px;
-    }
-
-    .card__second-secction{
-        width: 300px;
-    }
-
-
-    .card__second-section__empleado-puesto{
-        margin: 32px 24px 16px 24px;
-    }
-
-    .card__second-secction__button{
-        width: 240px;
-    }
-
-    .card__second-section__datos{
-        
-        font-size: 0.95em;
-        line-height: 22px;
-    }
-}
 
 
 .menu__productos{
