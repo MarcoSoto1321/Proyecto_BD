@@ -39,12 +39,6 @@
     </div>
         <!-- Fin barra de navegacíon-->
     <div>
-        <!-- Esta página se llamará desde el menú de funciones del inicio. 
-            - En esta deberá de estar la opción de agregar el número de mesero, mediante el cual se obtendrá 
-            toda la información relativa a la ordenes de dicho mesero. Por lo tanto, se necesita un campo que 
-            solicite el número de empleado, mande esa información a Python, y posteriormente imprima la información
-            de las ventas de dicho mesero
-        -->
         <form action="/info_ordenes" method="POST" autocomplete="off" class="form">
             <div class="form__container">
                 <h1 class="form__title">Obtener información de las ordenes de un mesero </h1>        
@@ -53,7 +47,7 @@
                     <label for="id_empleado" class="form__label">Ingrese su número de empleado(mesero): </label>
                     <span class="form_line"></span>
                 </div>
-                <input type="submit" class="form__submit" value="Agregar">
+                <input type="submit" class="form__submit" value="Buscar">
         </form>
 
         {% if msg %}

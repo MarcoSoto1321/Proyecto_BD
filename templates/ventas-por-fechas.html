@@ -26,6 +26,7 @@
                         <li>
                             <a href="{{url_for('inicio')}}">Inicio</a>
                         </li>
+                        
                     </ul>
                 </nav>
 
@@ -35,17 +36,11 @@
     </div>
         <!-- Fin barra de navegacíon-->
     <div>
-        <!-- Esta página se llamará desde el menú de funciones del inicio. 
-            - En esta deberá de estar la opción de agregar el número de mesero, mediante el cual se obtendrá 
-            toda la información relativa a la ordenes de dicho mesero. Por lo tanto, se necesita un campo que 
-            solicite el número de empleado, mande esa información a Python, y posteriormente imprima la información
-            de las ventas de dicho mesero
-        -->
         <form action="/ventas_por_fechas" method="POST" autocomplete="off" class="form">
             <div class="form__container">
                 <h1 class="form__title">Obtener información de ventas</h1>        
                 <div class="form__group">
-                    <p>Ingrese el intervalo de fechas deseado: </p>
+                    <p>Ingrese el intervalo de fechas deseado <a href="{{url_for('ventasPorFecha')}}">(fecha exacta)</a>: </p>
                     <div class="form__group">   
                         <input type="date" id="fecha_inferior" class="form__input" name="fecha_inferior" placeholder=" " required>
                         <span class="form_line"></span>
@@ -55,22 +50,22 @@
                         <span class="form_line"></span>
                     </div>
                 </div>
-                <input type="submit" class="form__submit" value="Agregar">
+                <input type="submit" class="form__submit" value="Buscar">
         </form>
 
         {% if msg %}
-            {% if msg != 'Se obtuvieron los siguientes datos para el empleado: ' %}
+            {% if msg != 'Se obtuvieron los siguientes datos para las fechas: ' %}
                 <h2> {{ msg }} </h2>
             {% else %}
                 <h2> {{ msg }} </h2>
                 {% if datos %}
                 <ul>
-                    <li>Número de órdenes tomadas: {{ numero }}</li>
-                    <li>Total de ganancias generadas: {{ total }}</li>
+                    <h3 class="txt-p">Número de órdenes tomadas: {{ numero }}</h3><br>
+                    <h3 class="txt-p">Total de ganancias generadas: {{ total }}</h3>
                 </ul>
                 {% endif %}
             {% endif %}
-        {% endif %}
+        {% endif %} 
 
     </div>
 </body>

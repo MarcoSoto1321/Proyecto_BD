@@ -34,12 +34,8 @@
     </div>
         <!-- Fin barra de navegacíon-->
     <div>
-        <!-- Aquí se agregará el número de mesero para generar una nueva orden -->
-        <!-- 
-            Cuando se genere la orden, se podrá agregar productos a la orden en ese momento. Si no, se puede agregar posteriormente.
-         -->
         {% if msg %}
-            <p> {{msg}} </p>
+            
             <form action="/agregar_orden" method="POST" autocomplete="off" class="form">
                 <div class="form__container">
                     <h1 class="form__title">Comenzar registro de orden</h1>        
@@ -52,7 +48,10 @@
                     </div>
                     <input type="submit" class="form__submit" value="Agregar"> 
                 </div>
+                <br>
+                <h3 class="txt-p"> {{ msg }} </h3><br>
             </form>
+
         {% else %}
             <form action="/agregar_orden" method="POST" autocomplete="off" class="form">
                 <div class="form__container">

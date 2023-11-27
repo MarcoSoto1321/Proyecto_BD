@@ -9,12 +9,6 @@
 </head>
 
 <body class="fondo__pages">
-<!-- Ejemplo para mostrar mensajes del latex 
-    {% if msg %}
-    <p class="msg">{{ msg }}</p>
-    {% endif %}
-
--->    <!--Barra de navegacíon-->
 <div>
 
     <header class="header-inpages">
@@ -89,6 +83,12 @@
                     <label for="foto" class="form__label">Seleccione una Foto</label>
                     <span class="form__line"></span>
                 </div>
+
+                <div class="form__group">   
+                    <input type="number" step="0.01" id="sueldo" class="form__input" name="sueldo" placeholder=" ">
+                    <label for="sueldo" class="form__label">Sueldo</label>
+                    <span class="form__line"></span>
+                </div>
                 
                     <legend>Datos de Vivienda</legend>
                     
@@ -132,6 +132,7 @@
                 <input type="checkbox" id="cocinero" name="cocinero" value="cocinero" class="form__imput-chk">
                 <label for="cocinero" id="cocinero" class="form__label-chk">Cocinero:</label>
 
+                <!-- Modificar formato -->
                 <div id="descripcionMesero" style="display: none;">
                     <label for="horario_entrada">Horario de entrada para Mesero:</label>
                     <input type="time" id="horario_entrada" name="horario_entrada">

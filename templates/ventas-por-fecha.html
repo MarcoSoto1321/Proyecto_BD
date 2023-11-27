@@ -51,23 +51,21 @@
                         <span class="form_line"></span>
                     </div>
                 </div>
-                <input type="submit" class="form__submit" value="Agregar">
+                <input type="submit" class="form__submit" value="Buscar">
         </form>
-
         {% if msg %}
-            {% if msg != 'Se obtuvieron los siguientes datos para el empleado: ' %}
+            {% if msg != 'Se obtuvieron los siguientes datos para la fecha: ' %}
                 <h2> {{ msg }} </h2>
             {% else %}
                 <h2> {{ msg }} </h2>
                 {% if datos %}
                 <ul>
-                    <li>Número de órdenes tomadas: {{ numero }}</li>
-                    <li>Total de ganancias generadas: {{ total }}</li>
+                    <h3 class="txt-p">Número de órdenes tomadas: {{ numero }}</h3><br>
+                    <h3 class="txt-p">Total de ganancias generadas: {{ total }}</h3>
                 </ul>
                 {% endif %}
             {% endif %}
-        {% endif %}
-
+        {% endif %} 
     </div>
 </body>
 </html>

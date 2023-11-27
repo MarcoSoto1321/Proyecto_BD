@@ -35,16 +35,6 @@
     </div>
         <!-- Fin barra de navegacíon-->
     <div>
-        <!-- Información que deberá de ir en la página para la generación de la factura -->
-        <!-- 
-            En este caso, se deberá de ingresar el folio de la orden y el RFC de cliente. Donde se visualizará lo siguiente
-
-            1. Si el folio de la orden es inválido, se deberá de señalizar al mesero
-            2. Si el RFC existe, se generará la facturar de forma directa
-            3. Si el RFC no existe, se deberá de llamar al formulario para agregar al cliente
-            
-            Una vez que se valide todo, se deberá de generar una vista con los datos del cliente y el ticket
-         -->
         {% if msg %}
         <form action="/buscar_rfc" method="POST" autocomplete="off" class="form">
             <div class="form__container">

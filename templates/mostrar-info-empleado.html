@@ -1,4 +1,3 @@
-<!-- ESTE YA OBTIENE LA IMAGEN. FALTAN LOS DATOS DL EMPLEADO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,6 +25,9 @@
                         <li>
                             <a href="{{url_for('inicio')}}">Inicio</a>
                         </li>
+                        <li>
+                            <a href="{{url_for('obtenerInfoEmpleado')}}">Obtener información de empleado</a>
+                        </li>
                     </ul>
                 </nav>
 
@@ -35,16 +37,14 @@
     </div>
         <!-- Fin barra de navegación-->
         <main class="card" >
+            <br>
             <section class="card__first-secction">
                 <div class="img__container">
                     <img class="card__first-secction__image" src="{{ ruta_imagen }}" alt="Imagen del empleado">
                 </div>
-                <!-- Se hace un loop sobre los datos -->
-                {% for telefono in telefonos %}
-                 <p class="card__second-section__datos"> * Telefono: {{ telefono }}</p>
-                {% endfor %}
             </section>
-
+            <br>
+            <hr>
             <section class="card__second-section">
                 <h2 class="card__second-section__nombre"> {{ datos.2 }} {{ datos.3 }} {{ datos.4 }} </h2>
                 <!-- Se hace un loop sobre los datos -->
@@ -61,6 +61,12 @@
                 {% if datos.17 %}
                 <p class="card__second-section__datos">El empleado es cocinero con especialidad en {{ datos.18 }}</p>
                 {% endif %}
+                <p class="card__second-section__datos"> * Sueldo: $ {{ datos.19 }}</p>
+
+                <h2 class="card__second-section__nombre"> Datos de contacto </h2>
+                {% for telefono in telefonos %}
+                 <p class="card__second-section__datos"> * Telefono: {{ telefono }}</p>
+                {% endfor %}
             </section>
             
         </main>
